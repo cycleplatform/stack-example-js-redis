@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "containers": {
+    "redis": {
+      "name": "redis",
+      "image": {
+        "name": "redis",
+        "origin": {
+          "type": "docker-hub",
+          "details": {
+            "target": "redis:latest"
+          }
+        }
+      },
+      "config": {
+        "network": {
+          "public": "disable",
+          "hostname": "redis",
+          "ports": ["6379:6379"]
+        },
+        "deploy": {
+          "instances": 1
+        }
+      }
+    },
+    "demo": {
+      "name": "demo",
+      "image": {
+        "name": "frontend",
+        "origin": {
+          "type": "docker-file",
+          "details": {
+            "context_dir": "/",
+            "build_file": "/Dockerfile"
+          }
+        }
+      },
+      "config": {
+        "network": {
+          "public": "enable",
+          "hostname": "frontend",
+          "ports": ["80:80", "443:80"]
+        },
+        "deploy": {
+          "instances": 1
+        }
+      }
+    }
+  }
+}
